@@ -1,0 +1,25 @@
+# Core API dependencies
+fastapi>=0.95.0,<0.105.0
+uvicorn>=0.22.0,<0.25.0
+python-multipart>=0.0.5,<0.1.0
+pydantic>=2.0.0,<2.5.0
+
+# Video processing dependencies
+moviepy>=1.0.3,<1.1.0
+opencv-python>=4.7.0,<4.9.0
+numpy>=1.22.0,<1.27.0
+
+# Image processing (with more flexible version constraints)
+scikit-image>=0.19.0
+scikit-learn>=1.0.0
+
+# Storage and configuration
+supabase>=1.0.0,<1.1.0
+python-dotenv>=0.19.0,<1.1.0
+
+# Additional useful packages
+pillow>=9.0.0  # For image processing
+requests>=2.25.0  # For HTTP requests
+
+# Note: pyscenedetect has been removed due to compatibility issues
+# The application will use a custom scene detection implementation based on OpenCV
