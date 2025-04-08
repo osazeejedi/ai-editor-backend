@@ -1,8 +1,13 @@
 [phases.setup]
-nixPkgs = ["python310", "python310Packages.pip", "python310Packages.setuptools", "python310Packages.wheel", "libGL", "libGLU", "xorg.libX11", "xorg.libXi", "xorg.libXext", "xorg.libXrender", "xorg.libXfixes", "xorg.libXcursor", "xorg.libXrandr", "xorg.libXinerama", "xorg.libXxf86vm", "xorg.libXtst", "libglvnd", "ffmpeg", "pkg-config"]
+nixPkgs = ["python310", "python310Packages.pip", "python310Packages.virtualenv", "python310Packages.setuptools", "python310Packages.wheel", "libGL", "libGLU", "xorg.libX11", "xorg.libXi", "xorg.libXext", "xorg.libXrender", "xorg.libXfixes", "xorg.libXcursor", "xorg.libXrandr", "xorg.libXinerama", "xorg.libXxf86vm", "xorg.libXtst", "libglvnd", "ffmpeg", "pkg-config"]
 
 [phases.install]
-cmds = ["pip3 install --upgrade pip", "pip3 install -r requirements.txt"]
+cmds = [
+  "python3 -m virtualenv /opt/venv",
+  "source /opt/venv/bin/activate",
+  "pip install --upgrade pip",
+  "pip install -r requirements.txt"
+]
 
 [start]
-cmd = "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+cmd = "source /opt/venv/bin/activate && uvicorn app.main:app --host 0.0.0.0 --port $PORT"
