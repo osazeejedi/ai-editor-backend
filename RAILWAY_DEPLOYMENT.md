@@ -14,13 +14,25 @@ Railway is an excellent choice for deploying your FastAPI backend because:
 
 ## Step 1: Prepare Your Repository
 
-We've already created the necessary files for Railway deployment:
+We've created two different deployment approaches for Railway:
+
+### Approach 1: Docker-based Deployment (Recommended)
+
+We've set up Docker-based deployment with these files:
+- `Dockerfile`: Defines the container environment with all necessary dependencies
+- `railway.toml`: Configures Railway to use the Dockerfile for deployment
+- `requirements.txt`: Lists all Python dependencies
+
+The Docker-based approach provides a more controlled environment and ensures all system dependencies for OpenCV are properly installed.
+
+### Approach 2: Nixpacks-based Deployment (Alternative)
+
+Alternatively, you can use the Nixpacks approach with these files:
 - `Procfile`: Tells Railway how to run your application
 - `runtime.txt`: Specifies the Python version
-- `requirements.txt`: Lists all dependencies
 - `nixpacks.toml`: Configures system dependencies for OpenCV and other libraries
 
-The `nixpacks.toml` file is particularly important as it ensures that all the required system libraries for OpenCV (like libGL.so.1) are installed in the Railway environment. Without these dependencies, the application would crash with errors related to missing libraries.
+However, the Docker approach is more reliable for this application due to the complex system dependencies required by OpenCV.
 
 ## Step 2: Set Up Supabase for File Storage
 
@@ -78,7 +90,9 @@ Update your frontend configuration to use the new backend URL:
 - **Deployment Fails**: Check the logs in Railway dashboard for specific errors
 - **Storage Issues**: Verify your Supabase credentials and bucket permissions
 - **Memory/CPU Limits**: If you encounter resource limits, consider upgrading your Railway plan
-- **OpenCV Errors**: If you see errors like `ImportError: libGL.so.1: cannot open shared object file: No such file or directory`, make sure the `nixpacks.toml` file is properly configured with all necessary system dependencies. You may need to add additional libraries depending on your specific OpenCV usage.
+- **OpenCV Errors**: If you see errors like `ImportError: libGL.so.1: cannot open shared object file: No such file or directory`, this is likely due to missing system dependencies. If using the Docker approach, you may need to add additional libraries to the Dockerfile. If using the Nixpacks approach, update the `nixpacks.toml` file.
+- **Docker Build Errors**: If you encounter Docker build errors, check that all system dependencies are correctly specified in the Dockerfile. You may need to add additional packages depending on your specific OpenCV usage.
+- **Railway Builder Selection**: If Railway is not using your Dockerfile, make sure the `railway.toml` file is correctly configured with `builder = "DOCKERFILE"`.
 
 ## Important Notes for Production
 
