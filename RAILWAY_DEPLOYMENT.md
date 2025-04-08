@@ -18,6 +18,9 @@ We've already created the necessary files for Railway deployment:
 - `Procfile`: Tells Railway how to run your application
 - `runtime.txt`: Specifies the Python version
 - `requirements.txt`: Lists all dependencies
+- `nixpacks.toml`: Configures system dependencies for OpenCV and other libraries
+
+The `nixpacks.toml` file is particularly important as it ensures that all the required system libraries for OpenCV (like libGL.so.1) are installed in the Railway environment. Without these dependencies, the application would crash with errors related to missing libraries.
 
 ## Step 2: Set Up Supabase for File Storage
 
@@ -75,6 +78,7 @@ Update your frontend configuration to use the new backend URL:
 - **Deployment Fails**: Check the logs in Railway dashboard for specific errors
 - **Storage Issues**: Verify your Supabase credentials and bucket permissions
 - **Memory/CPU Limits**: If you encounter resource limits, consider upgrading your Railway plan
+- **OpenCV Errors**: If you see errors like `ImportError: libGL.so.1: cannot open shared object file: No such file or directory`, make sure the `nixpacks.toml` file is properly configured with all necessary system dependencies. You may need to add additional libraries depending on your specific OpenCV usage.
 
 ## Important Notes for Production
 
